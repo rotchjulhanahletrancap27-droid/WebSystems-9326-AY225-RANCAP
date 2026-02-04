@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - College of Computer Studies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Fraunces:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--color-white);
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        
+        .page-hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .about-content {
+            padding: 6rem 0;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+        
+        .about-text h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .mission-vision {
+            background: var(--color-white);
+            padding: 6rem 0;
+        }
+        
+        .mv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .mv-card {
+            background: var(--color-background);
+            padding: 3rem;
+            border-left: 5px solid var(--color-accent);
+        }
+        
+        .mv-card h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .values-section {
+            padding: 6rem 0;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .value-card {
+            background: var(--color-white);
+            padding: 2rem;
+            border: 2px solid var(--color-border);
+            text-align: center;
+            transition: var(--transition-base);
+        }
+        
+        .value-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .value-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .history-section {
+            background: var(--color-white);
+            padding: 6rem 0;
+        }
+        
+        .timeline {
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 79px;
+            top: 40px;
+            bottom: -30px;
+            width: 2px;
+            background: var(--color-border);
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        .timeline-year {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            min-width: 100px;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-content h4 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 968px) {
+            .about-grid, .mv-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-accent">CCS</span>
+                <span class="logo-text">College of Computer Studies</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>About Our College</h1>
+            <p>Building tomorrow's technology leaders since 1985</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-content">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Who We Are</h2>
+                    <p>The College of Computer Studies is a premier institution dedicated to excellence in computing education and research. For over three decades, we have been at the forefront of technological innovation, preparing students to become leaders in the rapidly evolving world of technology.</p>
+                    <p>Our college brings together distinguished faculty, cutting-edge facilities, and a dynamic curriculum that blends theoretical foundations with hands-on practical experience. We pride ourselves on creating an environment where creativity, critical thinking, and technical excellence converge.</p>
+                </div>
+                <div class="welcome-image">
+                    <div class="image-placeholder">
+                        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="300" fill="#1a1a2e"/>
+                            <rect x="50" y="50" width="300" height="200" fill="#16213e" opacity="0.7"/>
+                            <circle cx="200" cy="150" r="60" fill="#e94560" opacity="0.5"/>
+                            <path d="M 150 100 L 250 200 M 250 100 L 150 200" stroke="#fff" stroke-width="3" opacity="0.3"/>
+                            <text x="200" y="240" font-family="JetBrains Mono" font-size="16" fill="#fff" text-anchor="middle">Excellence</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Our Purpose</span>
+                <h2 class="section-title">Mission & Vision</h2>
+            </div>
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <h3>Our Mission</h3>
+                    <p>To provide world-class computer science and information technology education that empowers students with the knowledge, skills, and ethical foundation needed to excel in the global technology landscape. We are committed to fostering innovation, research excellence, and industry partnerships that create meaningful impact on society.</p>
+                </div>
+                <div class="mv-card">
+                    <h3>Our Vision</h3>
+                    <p>To be recognized as a leading institution in computing education and research, known for producing graduates who drive technological innovation, demonstrate exemplary leadership, and contribute to solving complex global challenges through the responsible application of technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">What Drives Us</span>
+                <h2 class="section-title">Our Core Values</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h4>Excellence</h4>
+                    <p>Striving for the highest standards in education, research, and service.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h4>Innovation</h4>
+                    <p>Embracing creativity and pioneering new approaches to technology.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h4>Collaboration</h4>
+                    <p>Working together to achieve common goals and shared success.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚖️</div>
+                    <h4>Integrity</h4>
+                    <p>Maintaining the highest ethical standards in all our endeavors.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌍</div>
+                    <h4>Social Responsibility</h4>
+                    <p>Using technology to create positive impact in our communities.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">📚</div>
+                    <h4>Lifelong Learning</h4>
+                    <p>Cultivating curiosity and continuous growth in our students and faculty.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History -->
+    <section class="history-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Our Journey</span>
+                <h2 class="section-title">College History</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1985</div>
+                    <div class="timeline-content">
+                        <h4>Foundation</h4>
+                        <p>The College of Computer Studies was established with just 50 students and 5 faculty members, offering a single BS Computer Science program.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1992</div>
+                    <div class="timeline-content">
+                        <h4>Expansion</h4>
+                        <p>Introduction of the BS Information Technology program. Student enrollment reaches 500. Construction of dedicated computer laboratories begins.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2005</div>
+                    <div class="timeline-content">
+                        <h4>Recognition</h4>
+                        <p>CCS receives accreditation from the Philippine Association of Colleges and Universities Commission on Accreditation (PACUCOA). Establishes research centers for AI and Cybersecurity.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2015</div>
+                    <div class="timeline-content">
+                        <h4>Innovation Hub</h4>
+                        <p>Launch of the Innovation and Entrepreneurship Center. Partnership programs established with major tech companies including Microsoft, Google, and IBM.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h4>Digital Transformation</h4>
+                        <p>Successfully transitions to hybrid learning model. Introduces new degree programs in Data Science and Cybersecurity. Student population exceeds 1,200.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h4>Leading the Future</h4>
+                        <p>Opening of the state-of-the-art AI Research Laboratory. Launch of BS Artificial Intelligence program. Celebrating 40 years of excellence in computing education.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>College of Computer Studies</h3>
+                    <p>Empowering minds, transforming futures through excellence in computing education.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="faculty.html">Faculty</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: info@ccs.edu.ph</li>
+                        <li>Phone: +63 2 1234 5678</li>
+                        <li>Address: Manila, Philippines</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="LinkedIn">LI</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 College of Computer Studies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

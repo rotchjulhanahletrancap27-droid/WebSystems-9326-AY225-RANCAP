@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - College of Computer Studies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Fraunces:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--color-white);
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-section {
+            padding: 6rem 0;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .contact-info {
+            background: var(--color-white);
+            padding: 3rem;
+            border-left: 5px solid var(--color-accent);
+        }
+        
+        .contact-info h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-icon {
+            font-size: 2rem;
+            color: var(--color-accent);
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .info-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-content p {
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+        
+        .contact-form-container {
+            background: var(--color-white);
+            padding: 3rem;
+            border: 2px solid var(--color-border);
+        }
+        
+        .contact-form-container h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border: 2px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+        
+        .form-group input.error,
+        .form-group textarea.error,
+        .form-group select.error {
+            border-color: #dc3545;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            margin-top: 2rem;
+        }
+        
+        .form-submit .btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .error-message,
+        .success-message {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+            animation: slideInLeft 0.3s ease-out;
+        }
+        
+        .error-message {
+            background: #fff5f5;
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        
+        .success-message {
+            background: #f0fdf4;
+            border-color: #10b981;
+            color: #047857;
+        }
+        
+        .error-message ul {
+            margin: 0.5rem 0 0 1rem;
+        }
+        
+        #formErrors,
+        #formSuccess {
+            display: none;
+        }
+        
+        .map-container {
+            background: var(--color-secondary);
+            padding: 6rem 0;
+        }
+        
+        .map-placeholder {
+            background: var(--color-white);
+            border: 3px solid var(--color-primary);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 20px 20px 0 var(--color-accent);
+        }
+        
+        .map-placeholder svg {
+            width: 80%;
+            max-width: 500px;
+        }
+        
+        @media (max-width: 968px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .map-placeholder {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-accent">CCS</span>
+                <span class="logo-text">College of Computer Studies</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We're here to help and answer any questions you might have</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p style="margin-bottom: 2rem;">Have a question or need assistance? We'd love to hear from you. Reach out to us using any of the methods below.</p>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <h3>Visit Us</h3>
+                            <p>College of Computer Studies Building<br>
+                            Main Campus, University Drive<br>
+                            Manila, Philippines 1000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-content">
+                            <h3>Email</h3>
+                            <p>General Inquiries: info@ccs.edu.ph<br>
+                            Admissions: admissions@ccs.edu.ph<br>
+                            Career Services: careers@ccs.edu.ph</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-content">
+                            <h3>Phone</h3>
+                            <p>Main Office: +63 2 1234 5678<br>
+                            Admissions: +63 2 1234 5601<br>
+                            Mon-Fri: 8:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">🕐</div>
+                        <div class="info-content">
+                            <h3>Office Hours</h3>
+                            <p>Monday - Friday: 8:00 AM - 5:00 PM<br>
+                            Saturday: 9:00 AM - 12:00 PM<br>
+                            Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h2>Send us a Message</h2>
+                    
+                    <div id="formErrors"></div>
+                    <div id="formSuccess"></div>
+                    
+                    <form id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="contactName">Full Name *</label>
+                            <input 
+                                type="text" 
+                                id="contactName" 
+                                name="name" 
+                                placeholder="Enter your full name"
+                                required
+                                aria-required="true"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address *</label>
+                            <input 
+                                type="email" 
+                                id="contactEmail" 
+                                name="email" 
+                                placeholder="your.email@example.com"
+                                required
+                                aria-required="true"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactSubject">Subject *</label>
+                            <input 
+                                type="text" 
+                                id="contactSubject" 
+                                name="subject" 
+                                placeholder="What is your inquiry about?"
+                                required
+                                aria-required="true"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactCategory">Category</label>
+                            <select id="contactCategory" name="category">
+                                <option value="general">General Inquiry</option>
+                                <option value="admissions">Admissions</option>
+                                <option value="programs">Programs Information</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="career">Career Services</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage">Message *</label>
+                            <textarea 
+                                id="contactMessage" 
+                                name="message" 
+                                placeholder="Tell us more about your inquiry..."
+                                required
+                                aria-required="true"
+                            ></textarea>
+                        </div>
+                        
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-container">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 3rem;">
+                <span class="section-label">Find Us</span>
+                <h2 class="section-title" style="color: var(--color-white);">Our Location</h2>
+            </div>
+            <div class="map-placeholder">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="500" height="300" fill="#f8f9fa"/>
+                    
+                    <!-- Grid -->
+                    <line x1="0" y1="100" x2="500" y2="100" stroke="#e0e6ed" stroke-width="1"/>
+                    <line x1="0" y1="200" x2="500" y2="200" stroke="#e0e6ed" stroke-width="1"/>
+                    <line x1="100" y1="0" x2="100" y2="300" stroke="#e0e6ed" stroke-width="1"/>
+                    <line x1="200" y1="0" x2="200" y2="300" stroke="#e0e6ed" stroke-width="1"/>
+                    <line x1="300" y1="0" x2="300" y2="300" stroke="#e0e6ed" stroke-width="1"/>
+                    <line x1="400" y1="0" x2="400" y2="300" stroke="#e0e6ed" stroke-width="1"/>
+                    
+                    <!-- Building -->
+                    <rect x="180" y="80" width="140" height="160" fill="#1a1a2e"/>
+                    <rect x="190" y="90" width="30" height="30" fill="#16213e"/>
+                    <rect x="230" y="90" width="30" height="30" fill="#16213e"/>
+                    <rect x="270" y="90" width="30" height="30" fill="#16213e"/>
+                    <rect x="190" y="130" width="30" height="30" fill="#16213e"/>
+                    <rect x="230" y="130" width="30" height="30" fill="#16213e"/>
+                    <rect x="270" y="130" width="30" height="30" fill="#16213e"/>
+                    <rect x="190" y="170" width="30" height="30" fill="#16213e"/>
+                    <rect x="230" y="170" width="30" height="30" fill="#16213e"/>
+                    <rect x="270" y="170" width="30" height="30" fill="#16213e"/>
+                    <rect x="220" y="200" width="60" height="40" fill="#e94560"/>
+                    
+                    <!-- Location Pin -->
+                    <circle cx="250" cy="50" r="20" fill="#e94560" opacity="0.3"/>
+                    <circle cx="250" cy="50" r="12" fill="#e94560"/>
+                    <circle cx="250" cy="50" r="5" fill="#fff"/>
+                    
+                    <!-- Text -->
+                    <text x="250" y="270" font-family="JetBrains Mono" font-size="14" fill="#1a1a2e" text-anchor="middle" font-weight="600">CCS Building - Main Campus</text>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>College of Computer Studies</h3>
+                    <p>Empowering minds, transforming futures through excellence in computing education.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="faculty.html">Faculty</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: info@ccs.edu.ph</li>
+                        <li>Phone: +63 2 1234 5678</li>
+                        <li>Address: Manila, Philippines</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="LinkedIn">LI</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 College of Computer Studies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

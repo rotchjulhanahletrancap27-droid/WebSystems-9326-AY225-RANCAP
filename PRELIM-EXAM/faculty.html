@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Directory - College of Computer Studies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Fraunces:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--color-white);
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        
+        .faculty-section {
+            padding: 6rem 0;
+        }
+        
+        .faculty-controls {
+            background: var(--color-white);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            border: 2px solid var(--color-border);
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+        
+        .control-group input,
+        .control-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border: 2px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+        
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+        
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .faculty-card {
+            background: var(--color-white);
+            border: 2px solid var(--color-border);
+            transition: var(--transition-base);
+            overflow: hidden;
+        }
+        
+        .faculty-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faculty-avatar {
+            width: 100%;
+            height: 200px;
+            background: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .faculty-avatar svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .faculty-info {
+            padding: 2rem;
+        }
+        
+        .faculty-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .faculty-title {
+            color: var(--color-accent);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .faculty-dept {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .faculty-spec {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .faculty-contact {
+            font-size: 0.95rem;
+        }
+        
+        .faculty-contact p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: var(--color-text-light);
+            grid-column: 1 / -1;
+        }
+        
+        @media (max-width: 768px) {
+            .faculty-controls {
+                flex-direction: column;
+            }
+            
+            .faculty-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-accent">CCS</span>
+                <span class="logo-text">College of Computer Studies</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="faculty.html" class="active">Faculty</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Faculty Directory</h1>
+            <p>Meet our distinguished educators and researchers</p>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section class="faculty-section">
+        <div class="container">
+            <!-- Search and Filter Controls -->
+            <div class="faculty-controls">
+                <div class="control-group">
+                    <label for="facultySearch">Search Faculty</label>
+                    <input 
+                        type="text" 
+                        id="facultySearch" 
+                        placeholder="Search by name, title, or specialization..."
+                        aria-label="Search faculty members"
+                    >
+                </div>
+                <div class="control-group">
+                    <label for="departmentFilter">Filter by Department</label>
+                    <select id="departmentFilter" aria-label="Filter by department">
+                        <option value="all">All Departments</option>
+                        <option value="Administration">Administration</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Faculty Grid -->
+            <div id="facultyGrid" class="faculty-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>College of Computer Studies</h3>
+                    <p>Empowering minds, transforming futures through excellence in computing education.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="faculty.html">Faculty</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: info@ccs.edu.ph</li>
+                        <li>Phone: +63 2 1234 5678</li>
+                        <li>Address: Manila, Philippines</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="LinkedIn">LI</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 College of Computer Studies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

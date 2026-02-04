@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College of Computer Studies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Fraunces:wght@300;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-accent">CCS</span>
+                <span class="logo-text">College of Computer Studies</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">Shaping the Future</span>
+                <span class="title-line">of Technology</span>
+            </h1>
+            <p class="hero-subtitle">Where innovation meets education in computer science</p>
+            <div class="hero-cta">
+                <a href="programs.html" class="btn btn-primary">Explore Programs</a>
+                <a href="about.html" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card" data-stat="0">
+                    <div class="stat-number" data-target="1200">0</div>
+                    <div class="stat-label">Active Students</div>
+                </div>
+                <div class="stat-card" data-stat="1">
+                    <div class="stat-number" data-target="45">0</div>
+                    <div class="stat-label">Expert Faculty</div>
+                </div>
+                <div class="stat-card" data-stat="2">
+                    <div class="stat-number" data-target="8">0</div>
+                    <div class="stat-label">Degree Programs</div>
+                </div>
+                <div class="stat-card" data-stat="3">
+                    <div class="stat-number" data-target="95">0</div>
+                    <div class="stat-label">% Employment Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Welcome</span>
+                <h2 class="section-title">Leading Excellence in Computing Education</h2>
+            </div>
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <p>The College of Computer Studies stands at the forefront of technological education, preparing the next generation of innovators, developers, and technology leaders. Our comprehensive curriculum combines theoretical foundations with practical, hands-on experience.</p>
+                    <p>We offer cutting-edge programs in software development, artificial intelligence, cybersecurity, data science, and more. Our students work with industry-standard tools and collaborate with leading tech companies through our extensive partnership network.</p>
+                    <a href="about.html" class="link-arrow">Discover our story</a>
+                </div>
+                <div class="welcome-image">
+                    <div class="image-placeholder">
+                        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="400" height="300" fill="#1a1a2e"/>
+                            <circle cx="200" cy="150" r="80" fill="#0f3460" opacity="0.5"/>
+                            <circle cx="250" cy="120" r="60" fill="#16213e" opacity="0.7"/>
+                            <path d="M 150 100 L 250 100 L 200 200 Z" fill="#e94560" opacity="0.6"/>
+                            <text x="200" y="160" font-family="JetBrains Mono" font-size="14" fill="#fff" text-anchor="middle">Innovation</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Programs -->
+    <section class="featured-programs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Academic Programs</span>
+                <h2 class="section-title">Our Flagship Offerings</h2>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon">🎓</div>
+                    <h3>BS Computer Science</h3>
+                    <p>Comprehensive foundation in algorithms, software engineering, and system design.</p>
+                    <a href="programs.html" class="program-link">Learn more →</a>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon">💻</div>
+                    <h3>BS Information Technology</h3>
+                    <p>Focus on practical applications, network administration, and enterprise systems.</p>
+                    <a href="programs.html" class="program-link">Learn more →</a>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon">🤖</div>
+                    <h3>BS Artificial Intelligence</h3>
+                    <p>Explore machine learning, neural networks, and intelligent systems.</p>
+                    <a href="programs.html" class="program-link">Learn more →</a>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon">🔒</div>
+                    <h3>BS Cybersecurity</h3>
+                    <p>Master security protocols, ethical hacking, and digital forensics.</p>
+                    <a href="programs.html" class="program-link">Learn more →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Announcements -->
+    <section class="announcements-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Updates</span>
+                <h2 class="section-title">Latest Announcements</h2>
+            </div>
+            <div class="announcements-container" id="announcementsContainer">
+                <!-- Populated by JavaScript -->
+            </div>
+            <div class="text-center">
+                <a href="events.html" class="btn btn-outline">View All Events</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>College of Computer Studies</h3>
+                    <p>Empowering minds, transforming futures through excellence in computing education.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="faculty.html">Faculty</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: info@ccs.edu.ph</li>
+                        <li>Phone: +63 2 1234 5678</li>
+                        <li>Address: Manila, Philippines</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="LinkedIn">LI</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 College of Computer Studies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

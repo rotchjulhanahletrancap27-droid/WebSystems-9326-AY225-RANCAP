@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Programs - College of Computer Studies</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Fraunces:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--color-white);
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        
+        .programs-section {
+            padding: 6rem 0;
+        }
+        
+        .programs-tabs {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+        
+        .program-tab {
+            background: var(--color-white);
+            border: 2px solid var(--color-border);
+            padding: 1rem 2rem;
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            cursor: pointer;
+            transition: var(--transition-base);
+            position: relative;
+        }
+        
+        .program-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--color-accent);
+            transition: var(--transition-base);
+        }
+        
+        .program-tab:hover,
+        .program-tab.active {
+            border-color: var(--color-accent);
+            color: var(--color-primary);
+        }
+        
+        .program-tab.active::after {
+            width: 100%;
+        }
+        
+        .program-details {
+            display: none;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .program-details.active {
+            display: block;
+        }
+        
+        .program-header {
+            background: var(--color-white);
+            padding: 3rem;
+            border-left: 5px solid var(--color-accent);
+            margin-bottom: 3rem;
+        }
+        
+        .program-header h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .program-meta {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .program-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .program-meta-item strong {
+            color: var(--color-accent);
+        }
+        
+        .program-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+        
+        .program-main {
+            background: var(--color-white);
+            padding: 3rem;
+        }
+        
+        .program-main h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--color-primary);
+            margin: 2rem 0 1rem;
+        }
+        
+        .program-main h3:first-child {
+            margin-top: 0;
+        }
+        
+        .program-main p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .program-main ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .program-main li {
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+        
+        .program-main li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+        
+        .program-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-card {
+            background: var(--color-white);
+            padding: 2rem;
+            border: 2px solid var(--color-border);
+        }
+        
+        .sidebar-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .sidebar-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .cta-card {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .cta-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-white);
+        }
+        
+        .cta-card p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .cta-card .btn {
+            background: var(--color-accent);
+            color: var(--color-white);
+        }
+        
+        @media (max-width: 968px) {
+            .program-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .programs-tabs {
+                flex-direction: column;
+            }
+            
+            .program-tab {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-accent">CCS</span>
+                <span class="logo-text">College of Computer Studies</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html" class="active">Programs</a></li>
+                <li><a href="faculty.html">Faculty</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Academic Programs</h1>
+            <p>Discover your path to a successful career in technology</p>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs-section">
+        <div class="container">
+            <!-- Program Tabs -->
+            <div class="programs-tabs">
+                <button class="program-tab active" data-program="cs" onclick="showProgramDetails('cs')">
+                    BS Computer Science
+                </button>
+                <button class="program-tab" data-program="it" onclick="showProgramDetails('it')">
+                    BS Information Technology
+                </button>
+                <button class="program-tab" data-program="ai" onclick="showProgramDetails('ai')">
+                    BS Artificial Intelligence
+                </button>
+                <button class="program-tab" data-program="cyber" onclick="showProgramDetails('cyber')">
+                    BS Cybersecurity
+                </button>
+            </div>
+
+            <!-- BS Computer Science -->
+            <div id="cs" class="program-details active">
+                <div class="program-header">
+                    <h2>Bachelor of Science in Computer Science</h2>
+                    <p>Build a strong foundation in algorithms, programming, and computational theory</p>
+                    <div class="program-meta">
+                        <div class="program-meta-item">
+                            <strong>Duration:</strong> 4 years
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Units:</strong> 165 units
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Degree:</strong> Bachelor of Science
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-content">
+                    <div class="program-main">
+                        <h3>Program Overview</h3>
+                        <p>The Bachelor of Science in Computer Science program provides students with a comprehensive understanding of computing fundamentals, advanced programming techniques, and theoretical computer science. This program prepares graduates for careers in software development, systems analysis, research, and various technology-driven fields.</p>
+                        
+                        <p>Students will develop strong analytical and problem-solving skills while learning to design, implement, and maintain complex software systems. The curriculum emphasizes both theoretical foundations and practical applications, ensuring graduates are well-equipped to adapt to the rapidly evolving technology landscape.</p>
+
+                        <h3>Core Competencies</h3>
+                        <ul>
+                            <li>Advanced programming and software development</li>
+                            <li>Data structures and algorithms design</li>
+                            <li>Database management and design</li>
+                            <li>Computer architecture and operating systems</li>
+                            <li>Software engineering principles and practices</li>
+                            <li>Web and mobile application development</li>
+                            <li>Artificial intelligence and machine learning basics</li>
+                            <li>Computer networks and security fundamentals</li>
+                        </ul>
+
+                        <h3>Career Opportunities</h3>
+                        <ul>
+                            <li>Software Engineer / Developer</li>
+                            <li>Systems Analyst</li>
+                            <li>Database Administrator</li>
+                            <li>Full Stack Developer</li>
+                            <li>Research Scientist</li>
+                            <li>Technical Consultant</li>
+                            <li>Quality Assurance Engineer</li>
+                            <li>Solutions Architect</li>
+                        </ul>
+
+                        <h3>Curriculum Highlights</h3>
+                        <p>The program spans four years with carefully structured courses that progress from fundamentals to advanced topics. Students engage in hands-on laboratory work, team projects, and internship opportunities with industry partners.</p>
+                    </div>
+
+                    <div class="program-sidebar">
+                        <div class="sidebar-card">
+                            <h4>Admission Requirements</h4>
+                            <ul>
+                                <li>High school diploma or equivalent</li>
+                                <li>Passing score on entrance exam</li>
+                                <li>Mathematics proficiency</li>
+                                <li>Interview with program director</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-card">
+                            <h4>Key Features</h4>
+                            <ul>
+                                <li>Industry partnerships</li>
+                                <li>Modern computer laboratories</li>
+                                <li>Research opportunities</li>
+                                <li>Internship programs</li>
+                                <li>International certifications</li>
+                            </ul>
+                        </div>
+
+                        <div class="cta-card">
+                            <h4>Ready to Apply?</h4>
+                            <p>Start your journey towards a rewarding career in computer science.</p>
+                            <a href="contact.html" class="btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BS Information Technology -->
+            <div id="it" class="program-details">
+                <div class="program-header">
+                    <h2>Bachelor of Science in Information Technology</h2>
+                    <p>Master practical IT skills and enterprise system management</p>
+                    <div class="program-meta">
+                        <div class="program-meta-item">
+                            <strong>Duration:</strong> 4 years
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Units:</strong> 162 units
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Degree:</strong> Bachelor of Science
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-content">
+                    <div class="program-main">
+                        <h3>Program Overview</h3>
+                        <p>The Bachelor of Science in Information Technology focuses on the practical application of technology in business and organizational settings. Students learn to design, implement, and manage information systems that support business operations and strategic objectives.</p>
+                        
+                        <p>This program emphasizes hands-on experience with current technologies, tools, and methodologies used in the IT industry. Graduates are prepared to work as IT professionals who can bridge the gap between technical solutions and business needs.</p>
+
+                        <h3>Core Competencies</h3>
+                        <ul>
+                            <li>Network administration and management</li>
+                            <li>System integration and deployment</li>
+                            <li>Database design and administration</li>
+                            <li>Web technologies and development</li>
+                            <li>IT project management</li>
+                            <li>Cloud computing and virtualization</li>
+                            <li>IT security and risk management</li>
+                            <li>Business process analysis</li>
+                        </ul>
+
+                        <h3>Career Opportunities</h3>
+                        <ul>
+                            <li>IT Manager</li>
+                            <li>Network Administrator</li>
+                            <li>Systems Administrator</li>
+                            <li>Database Administrator</li>
+                            <li>Web Developer</li>
+                            <li>IT Consultant</li>
+                            <li>Technical Support Specialist</li>
+                            <li>Cloud Solutions Engineer</li>
+                        </ul>
+
+                        <h3>Industry Certifications</h3>
+                        <p>Students are prepared for various industry certifications including CompTIA A+, Network+, Security+, Cisco CCNA, Microsoft certifications, and AWS certifications, enhancing their employability and professional credentials.</p>
+                    </div>
+
+                    <div class="program-sidebar">
+                        <div class="sidebar-card">
+                            <h4>Admission Requirements</h4>
+                            <ul>
+                                <li>High school diploma or equivalent</li>
+                                <li>Passing score on entrance exam</li>
+                                <li>Basic computer literacy</li>
+                                <li>Personal statement</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-card">
+                            <h4>Program Strengths</h4>
+                            <ul>
+                                <li>Industry-aligned curriculum</li>
+                                <li>Certification preparation</li>
+                                <li>Hands-on laboratories</li>
+                                <li>Business IT focus</li>
+                                <li>Internship placement</li>
+                            </ul>
+                        </div>
+
+                        <div class="cta-card">
+                            <h4>Ready to Apply?</h4>
+                            <p>Begin your IT career with comprehensive training and support.</p>
+                            <a href="contact.html" class="btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BS Artificial Intelligence -->
+            <div id="ai" class="program-details">
+                <div class="program-header">
+                    <h2>Bachelor of Science in Artificial Intelligence</h2>
+                    <p>Shape the future with machine learning and intelligent systems</p>
+                    <div class="program-meta">
+                        <div class="program-meta-item">
+                            <strong>Duration:</strong> 4 years
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Units:</strong> 168 units
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Degree:</strong> Bachelor of Science
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-content">
+                    <div class="program-main">
+                        <h3>Program Overview</h3>
+                        <p>The Bachelor of Science in Artificial Intelligence is our newest and most innovative program, designed to prepare students for the AI-driven future. This cutting-edge program combines computer science fundamentals with specialized training in machine learning, neural networks, and intelligent systems.</p>
+                        
+                        <p>Students will learn to develop AI solutions for real-world problems, working with state-of-the-art tools and frameworks. The program includes extensive hands-on projects using our new AI Research Laboratory facilities.</p>
+
+                        <h3>Core Competencies</h3>
+                        <ul>
+                            <li>Machine learning algorithms and techniques</li>
+                            <li>Deep learning and neural networks</li>
+                            <li>Natural language processing</li>
+                            <li>Computer vision and image processing</li>
+                            <li>Reinforcement learning</li>
+                            <li>AI ethics and responsible AI development</li>
+                            <li>Big data analytics</li>
+                            <li>AI system deployment and optimization</li>
+                        </ul>
+
+                        <h3>Career Opportunities</h3>
+                        <ul>
+                            <li>Machine Learning Engineer</li>
+                            <li>AI Research Scientist</li>
+                            <li>Data Scientist</li>
+                            <li>NLP Engineer</li>
+                            <li>Computer Vision Engineer</li>
+                            <li>AI Solutions Architect</li>
+                            <li>Robotics Engineer</li>
+                            <li>AI Product Manager</li>
+                        </ul>
+
+                        <h3>Research Opportunities</h3>
+                        <p>Students have access to our AI Research Laboratory and can participate in cutting-edge research projects in collaboration with faculty and industry partners. Research areas include healthcare AI, autonomous systems, and ethical AI development.</p>
+                    </div>
+
+                    <div class="program-sidebar">
+                        <div class="sidebar-card">
+                            <h4>Admission Requirements</h4>
+                            <ul>
+                                <li>High school diploma with honors</li>
+                                <li>Strong mathematics background</li>
+                                <li>Entrance exam with AI aptitude test</li>
+                                <li>Programming knowledge preferred</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-card">
+                            <h4>Unique Features</h4>
+                            <ul>
+                                <li>AI Research Lab access</li>
+                                <li>Industry AI projects</li>
+                                <li>GPU computing resources</li>
+                                <li>AI ethics curriculum</li>
+                                <li>International conferences</li>
+                            </ul>
+                        </div>
+
+                        <div class="cta-card">
+                            <h4>Ready to Apply?</h4>
+                            <p>Join the AI revolution and become a pioneer in intelligent systems.</p>
+                            <a href="contact.html" class="btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BS Cybersecurity -->
+            <div id="cyber" class="program-details">
+                <div class="program-header">
+                    <h2>Bachelor of Science in Cybersecurity</h2>
+                    <p>Protect digital assets and combat cyber threats</p>
+                    <div class="program-meta">
+                        <div class="program-meta-item">
+                            <strong>Duration:</strong> 4 years
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Units:</strong> 165 units
+                        </div>
+                        <div class="program-meta-item">
+                            <strong>Degree:</strong> Bachelor of Science
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-content">
+                    <div class="program-main">
+                        <h3>Program Overview</h3>
+                        <p>The Bachelor of Science in Cybersecurity addresses the critical need for professionals who can protect organizations from cyber threats. This program provides comprehensive training in security principles, ethical hacking, digital forensics, and risk management.</p>
+                        
+                        <p>Students learn both offensive and defensive security techniques, gaining hands-on experience in secure system design, penetration testing, and incident response. The program emphasizes ethical considerations and legal frameworks surrounding cybersecurity.</p>
+
+                        <h3>Core Competencies</h3>
+                        <ul>
+                            <li>Network security and defense</li>
+                            <li>Ethical hacking and penetration testing</li>
+                            <li>Cryptography and encryption</li>
+                            <li>Digital forensics and incident response</li>
+                            <li>Security risk assessment and management</li>
+                            <li>Secure software development</li>
+                            <li>Cloud security</li>
+                            <li>Compliance and security frameworks</li>
+                        </ul>
+
+                        <h3>Career Opportunities</h3>
+                        <ul>
+                            <li>Cybersecurity Analyst</li>
+                            <li>Ethical Hacker / Penetration Tester</li>
+                            <li>Security Consultant</li>
+                            <li>Digital Forensics Specialist</li>
+                            <li>Security Operations Center Analyst</li>
+                            <li>Chief Information Security Officer</li>
+                            <li>Incident Response Specialist</li>
+                            <li>Security Architect</li>
+                        </ul>
+
+                        <h3>Certifications Pathway</h3>
+                        <p>The program prepares students for industry-leading certifications including CEH (Certified Ethical Hacker), CompTIA Security+, CISSP, and CISM, providing pathways to advanced security roles and specialized career opportunities.</p>
+                    </div>
+
+                    <div class="program-sidebar">
+                        <div class="sidebar-card">
+                            <h4>Admission Requirements</h4>
+                            <ul>
+                                <li>High school diploma or equivalent</li>
+                                <li>Entrance exam with logic component</li>
+                                <li>Background check required</li>
+                                <li>Ethics statement agreement</li>
+                            </ul>
+                        </div>
+
+                        <div class="sidebar-card">
+                            <h4>Special Features</h4>
+                            <ul>
+                                <li>Cyber range training environment</li>
+                                <li>Industry partnerships</li>
+                                <li>Capture the Flag competitions</li>
+                                <li>Security clearance guidance</li>
+                                <li>Internships with security firms</li>
+                            </ul>
+                        </div>
+
+                        <div class="cta-card">
+                            <h4>Ready to Apply?</h4>
+                            <p>Defend the digital world and build a secure future.</p>
+                            <a href="contact.html" class="btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>College of Computer Studies</h3>
+                    <p>Empowering minds, transforming futures through excellence in computing education.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="faculty.html">Faculty</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Email: info@ccs.edu.ph</li>
+                        <li>Phone: +63 2 1234 5678</li>
+                        <li>Address: Manila, Philippines</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="LinkedIn">LI</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 College of Computer Studies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
