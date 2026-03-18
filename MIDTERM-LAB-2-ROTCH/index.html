@@ -4,804 +4,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebScraper – Computer Networks</title>
+
+    <!-- External libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
 
-        body {
-            background: #4a4a4a;
-            min-height: 100vh;
-            padding: 30px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            background: #f0f0f0;
-            border-radius: 24px;
-            box-shadow: 0 20px 35px -8px #2e2e2e;
-            border: 1px solid #8b7a6b;
-            overflow: hidden;
-        }
-
-        .header {
-            background: #7c6a5c;
-            color: #f2f2f2;
-            padding: 24px 30px;
-            border-bottom: 2px solid #5b4d41;
-        }
-
-        .header h1 {
-            font-size: 2.4rem;
-            font-weight: 400;
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #f0e8e0;
-        }
-
-        .header-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            background: #9b8b7c;
-            display: inline-block;
-            padding: 5px 30px;
-            border-radius: 30px;
-            color: #1e1e1e;
-            font-weight: 400;
-            border: 1px solid #c0b2a4;
-            margin: 0;
-        }
-
-        /* Topic badge */
-        .topic-badge {
-            font-size: 0.85rem;
-            background: #4f7a5c;
-            color: #e8f5ec;
-            padding: 5px 18px;
-            border-radius: 30px;
-            border: 1px solid #3d6148;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .main-content {
-            padding: 30px 35px;
-            background: #e8e6e2;
-        }
-
-        /* Quick-pick topic buttons */
-        .topic-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
-        .topic-pills span {
-            font-size: 0.78rem;
-            color: #5b4d41;
-            font-weight: 600;
-            align-self: center;
-            margin-right: 4px;
-        }
-
-        .pill {
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.82rem;
-            cursor: pointer;
-            background: #d4c9be;
-            border: 1px solid #9f8f80;
-            color: #2c2c2c;
-            transition: 0.15s;
-            font-weight: 500;
-            box-shadow: 0 2px 0 #857567;
-        }
-
-        .pill:hover {
-            background: #b7a48f;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 3px 0 #6b5e50;
-        }
-
-        .pill:active {
-            transform: translateY(2px);
-            box-shadow: none;
-        }
-
-        .input-section {
-            background: #d6cfc7;
-            padding: 24px;
-            border-radius: 18px;
-            margin-bottom: 30px;
-            border: 1px solid #b4a391;
-            box-shadow: 0 4px 0 #7f6e60;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .url-input {
-            flex: 1;
-            min-width: 260px;
-            padding: 15px 20px;
-            border: 1px solid #9c8d7e;
-            border-radius: 40px;
-            font-size: 1rem;
-            background: #fcf9f5;
-            color: #2c2c2c;
-            box-shadow: inset 0 2px 5px #bbb1a6;
-        }
-
-        .url-input:focus {
-            outline: none;
-            border-color: #6b5f53;
-            box-shadow: 0 0 0 3px #d1c3b7, inset 0 1px 4px #ad9f92;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 40px;
-            font-size: 1.05rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.1s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #b7a79a;
-            color: #1e1e1e;
-            border: 1px solid #8f7f70;
-            box-shadow: 0 4px 0 #695e53;
-        }
-
-        .btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 #695e53;
-        }
-
-        .btn-primary { background: #b7a187; }
-        .btn-success { background: #a5917c; }
-        .btn-secondary { background: #c2b2a3; }
-
-        .btn:disabled {
-            opacity: 0.45;
-            transform: translateY(0);
-            box-shadow: 0 2px 0 #6b5f53;
-            pointer-events: none;
-        }
-
-        .proxy-log {
-            background: #b9aea4;
-            color: #202020;
-            padding: 14px 22px;
-            border-radius: 36px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
-            margin-top: 18px;
-            border: 1px solid #938373;
-            box-shadow: inset 0 1px 6px #ddd2c8;
-        }
-
-        .proxy-log.error {
-            background: #d4b9b1;
-            color: #3a2c2c;
-            border-color: #ac827a;
-        }
-
-        .progress-container {
-            background: #cdc1b6;
-            padding: 20px;
-            border-radius: 40px;
-            margin: 20px 0;
-            border: 1px solid #aa9b8d;
-            display: none;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 30px;
-            background: #8f8173;
-            border-radius: 30px;
-            text-align: center;
-            line-height: 30px;
-            color: #f0f0f0;
-            font-weight: 500;
-            border: 1px solid #665a4e;
-            transition: width 0.2s;
-        }
-
-        .progress-status {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            color: #2f2f2f;
-            font-size: 0.95rem;
-        }
-
-        .stage-badge {
-            background: #dacfc5;
-            padding: 4px 22px;
-            border-radius: 40px;
-            border: 1px solid #988d81;
-        }
-
-        .stats-section {
-            background: #cfc4b8;
-            padding: 22px 20px;
-            border-radius: 28px;
-            margin: 20px 0 30px;
-            display: none;
-            flex-wrap: wrap;
-            gap: 14px;
-            border: 1px solid #ad9e8f;
-        }
-
-        /* Stats label row */
-        .stats-label-row {
-            width: 100%;
-            font-size: 0.8rem;
-            color: #5a4d41;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding-bottom: 4px;
-            border-bottom: 1px solid #b8a99a;
-            margin-bottom: 4px;
-        }
-
-        .stats-items {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 14px;
-            width: 100%;
-        }
-
-        .stat-item {
-            text-align: center;
-            min-width: 95px;
-            background: #ece3db;
-            padding: 12px 12px;
-            border-radius: 28px;
-            border: 1px solid #b5a392;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 450;
-            color: #2f2a25;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #4f4239;
-        }
-
-        .message-container { margin: 18px 0; }
-
-        .warning-message {
-            background: #e1d5cc;
-            color: #2b1f18;
-            padding: 14px 24px;
-            border-radius: 40px;
-            border-left: 6px solid #a7654b;
-            border: 1px solid #b99f8f;
-        }
-
-        .success-message {
-            background: #dad1c9;
-            color: #1f3a28;
-            padding: 14px 24px;
-            border-radius: 40px;
-            border-left: 6px solid #6d8f72;
-            border: 1px solid #aab89c;
-        }
-
-        .content-preview {
-            background: #f2ece6;
-            border: 1px solid #b9ab9e;
-            border-radius: 24px;
-            margin: 25px 0 0;
-            max-height: 580px;
-            overflow-y: auto;
-            padding: 28px;
-            box-shadow: inset 0 2px 10px #d9cdc2;
-        }
-
-        .content-preview h3 {
-            color: #3f332b;
-            font-size: 1.8rem;
-            font-weight: 350;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #bfb0a3;
-        }
-
-        .scraped-content { line-height: 1.7; color: #1f1f1f; }
-        .scraped-content h1, .scraped-content h2, .scraped-content h3,
-        .scraped-content p, .scraped-content li, .scraped-content blockquote,
-        .scraped-content th, .scraped-content td, .scraped-content pre {
-            color: #1f1f1f;
-        }
-
-        .scraped-content h1 {
-            border-left: 6px solid #a18673;
-            padding-left: 18px;
-            font-weight: 500;
-        }
-
-        .scraped-content pre {
-            background: #e3dbd2;
-            border: 1px solid #b1a192;
-            border-radius: 20px;
-            padding: 18px;
-        }
-
-        .copy-btn {
-            background: #c5b4a4;
-            border: 1px solid #8d7c6b;
-            color: #1f1f1f;
-            padding: 5px 16px;
-            border-radius: 30px;
-            font-weight: 500;
-            box-shadow: 0 3px 0 #6d5f52;
-            cursor: pointer;
-            transition: 0.07s;
-        }
-        .copy-btn:active { transform: translateY(3px); box-shadow: none; }
-
-        .article-header {
-            background: #ece1d7;
-            border: 1px solid #b7a695;
-            border-radius: 36px;
-            padding: 22px;
-            margin-bottom: 22px;
-        }
-        .article-header h1 { color: #26221e; }
-        .article-meta {
-            background: #d9cdc1;
-            padding: 7px 22px;
-            border-radius: 40px;
-            display: inline-block;
-            border: 1px solid #a49282;
-        }
-
-        #pdfContainer {
-            position: fixed;
-            top: -9999px;
-            left: -9999px;
-            width: 800px;
-            background: white;
-            padding: 40px;
-            z-index: -1;
-        }
-
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: #d2c8bf; border-radius: 20px; }
-        ::-webkit-scrollbar-thumb { background: #9f8f80; border-radius: 20px; border: 2px solid #ddd2c8; }
-    </style>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>
-                <span>🌐</span> Web Scraper
-            </h1>
-            <div class="header-meta">
-                <p>Rotchjul Hanahlet G. Rancap</p>
-                <span class="topic-badge">📡 Computer Networks</span>
-            </div>
-        </div>
 
-        <div class="main-content">
+<div class="container">
 
-            <!-- Quick-pick topic pills -->
-            <div class="topic-pills">
-                <span>quick pick →</span>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/osi-model-full-form/">OSI Model</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/tcp-ip-model/">TCP/IP Model</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/types-of-network-topology/">Network Topology</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/differences-between-tcp-and-udp/">TCP vs UDP</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/domain-name-system-dns-in-application-layer/">DNS</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/dynamic-host-configuration-protocol-dhcp/">DHCP</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/difference-between-ipv4-and-ipv6/">IPv4 vs IPv6</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/subnetting-for-networks/">Subnetting</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/computer-network-firewalls/">Firewalls</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/basics-of-wi-fi/">Wi-Fi</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/http-full-form/">HTTP</button>
-                <button class="pill" data-url="https://www.geeksforgeeks.org/address-resolution-in-dns/">ARP</button>
-            </div>
-
-            <div class="input-section">
-                <div class="input-group">
-                    <input type="url" id="urlInput" class="url-input"
-                           placeholder="https://www.geeksforgeeks.org/osi-model-full-form/"
-                           value="https://www.geeksforgeeks.org/osi-model-full-form/">
-                    <button id="scrapeBtn" class="btn btn-primary">
-                        <span>⛏️</span> scrape
-                    </button>
-                    <button id="downloadBtn" class="btn btn-success" disabled>
-                        <span>📎</span> pdf
-                    </button>
-                    <button id="clearBtn" class="btn btn-secondary">
-                        <span>🗑️</span> clear
-                    </button>
-                </div>
-                <div id="proxyLog" class="proxy-log">⌨️ proxy: ready · topic: computer networks</div>
-            </div>
-
-            <div id="progressContainer" class="progress-container">
-                <div id="progressBar" class="progress-bar">0%</div>
-                <div class="progress-status">
-                    <span id="statusText">starting...</span>
-                    <span id="stageBadge" class="stage-badge">⬜</span>
-                </div>
-            </div>
-
-            <div id="messageContainer" class="message-container"></div>
-
-            <!-- Stats -->
-            <div id="statsSection" class="stats-section">
-                <div class="stats-label-row">📡 computer networks · article stats</div>
-                <div class="stats-items">
-                    <div class="stat-item">
-                        <div class="stat-value" id="wordCount">–</div>
-                        <div class="stat-label">words</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="headingCount">–</div>
-                        <div class="stat-label">headings</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="codeBlocks">–</div>
-                        <div class="stat-label">code blocks</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="titleLength">–</div>
-                        <div class="stat-label">title chars</div>
-                    </div>
-                    <div class="stat-item" style="min-width:160px;">
-                        <div class="stat-value" style="font-size:1rem;padding-top:6px;" id="lastUpdated">–</div>
-                        <div class="stat-label">last updated</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- hidden pdf container -->
-            <div id="pdfContainer"></div>
-
-            <div class="content-preview">
-                <h3>📄 preview · computer networks</h3>
-                <div id="scrapedContent" class="scraped-content">
-                    <p style="color: #5b4f45; text-align: center;">select a topic above or enter a GeeksforGeeks Computer Networks URL and click scrape</p>
-                </div>
-            </div>
+    <!-- ── Header ── -->
+    <div class="header">
+        <h1><span>🌐</span> Web Scraper</h1>
+        <div class="header-meta">
+            <p>Rotchjul Hanahlet G. Rancap</p>
+            <span class="topic-badge">📡 Computer Networks</span>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            const PROXIES = [
-                { name: 'corsproxy.io',             buildUrl: (t) => `https://corsproxy.io/?${encodeURIComponent(t)}`,                            extract: async (r) => r.text() },
-                { name: 'allorigins.win',            buildUrl: (t) => `https://api.allorigins.win/get?url=${encodeURIComponent(t)}`,               extract: async (r) => (await r.json()).contents },
-                { name: 'codetabs.com',              buildUrl: (t) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(t)}`,          extract: async (r) => r.text() },
-                { name: 'thingproxy.freeboard.io',   buildUrl: (t) => `https://thingproxy.freeboard.io/fetch/${t}`,                               extract: async (r) => r.text() }
-            ];
+    <div class="main-content">
 
-            // Validate that the URL is a Computer Networks related GfG article
-            const CN_KEYWORDS = [
-                'osi','tcp','udp','ip','dns','dhcp','http','https','ftp','smtp','ssl','tls',
-                'network','subnet','routing','switching','firewall','wi-fi','wifi','wireless',
-                'ethernet','lan','wan','mac-address','arp','icmp','nat','vpn','bandwidth',
-                'topology','protocol','socket','port','packet','frame','hub','router','switch',
-                'bridge','gateway','proxy','computer-network','network-layer','data-link',
-                'physical-layer','transport-layer','application-layer','session-layer',
-                'presentation-layer','ipv4','ipv6','address-resolution','subnetting'
-            ];
+        <!-- ── Base URL bar ── -->
+        <div class="base-url-bar">
+            <span class="base-url-label">🔗 Base URL</span>
+            <div class="base-url-display">
+                <a href="https://www.geeksforgeeks.org/" target="_blank">
+                    https://www.geeksforgeeks.org/
+                </a>
+            </div>
+            <span class="topic-badge" style="background:#6b5a4e; border-color:#4a3c32;">
+                📂 computer-networks/
+            </span>
+        </div>
 
-            const urlInput    = $('#urlInput');
-            const scrapeBtn   = $('#scrapeBtn');
-            const downloadBtn = $('#downloadBtn');
-            const clearBtn    = $('#clearBtn');
-            const scrapedContent  = $('#scrapedContent');
-            const pdfContainer    = $('#pdfContainer');
-            const proxyLog        = $('#proxyLog');
-            const progressContainer = $('#progressContainer');
-            const progressBar     = $('#progressBar');
-            const statusText      = $('#statusText');
-            const stageBadge      = $('#stageBadge');
-            const messageContainer = $('#messageContainer');
-            const statsSection    = $('#statsSection');
-            const titleLength     = $('#titleLength');
-            const wordCount       = $('#wordCount');
-            const headingCount    = $('#headingCount');
-            const codeBlocks      = $('#codeBlocks');
-            const lastUpdated     = $('#lastUpdated');
+        <!-- ── Topic pills ── -->
+        <div class="topic-section-label">📡 select a computer networks topic</div>
+        <div class="topic-pills">
+            <button class="pill" data-slug="computer-networks/basics-computer-networking/">Basics of Networking</button>
+            <button class="pill" data-slug="computer-networks/layers-of-osi-model/">OSI Model</button>
+            <button class="pill" data-slug="computer-networks/tcp-ip-model/">TCP/IP Model</button>
+            <button class="pill" data-slug="computer-networks/types-of-network-topology/">Network Topology</button>
+            <button class="pill" data-slug="computer-networks/differences-between-tcp-and-udp/">TCP vs UDP</button>
+            <button class="pill" data-slug="computer-networks/domain-name-system-dns-in-application-layer/">DNS</button>
+            <button class="pill" data-slug="computer-networks/dynamic-host-configuration-protocol-dhcp/">DHCP</button>
+            <button class="pill" data-slug="computer-networks/difference-between-ipv4-and-ipv6/">IPv4 vs IPv6</button>
+            <button class="pill" data-slug="computer-networks/ip-addressing-classless-inter-domain-routing/">Subnetting</button>
+            <button class="pill" data-slug="computer-networks/introduction-of-firewall-in-computer-network/">Firewalls</button>
+            <button class="pill" data-slug="computer-networks/basics-of-wi-fi/">Wi-Fi</button>
+            <button class="pill" data-slug="computer-networks/http-full-form/">HTTP</button>
+        </div>
 
-            let currentTitle       = '';
-            let currentLastUpdated = '';
+        <!-- ── Input section ── -->
+        <div class="input-section">
 
-            const TITLES_TO_REMOVE = ['related articles','recommended','advertisement','trending','latest','improve','save','share','report issue','please login','comment','subscribe','newsletter','suggest changes'];
+            <!-- Split input: locked base + editable slug -->
+            <div class="url-row">
+                <div class="base-prefix">https://www.geeksforgeeks.org/</div>
+                <input type="text" id="slugInput" class="slug-input"
+                       placeholder="computer-networks/basics-computer-networking/"
+                       value="computer-networks/basics-computer-networking/">
+            </div>
 
-            function shouldRemoveTitle(title) {
-                if (!title) return false;
-                const lower = title.toLowerCase().trim();
-                return TITLES_TO_REMOVE.some(t => lower.includes(t));
-            }
+            <!-- Live full URL preview -->
+            <div class="full-url-preview">
+                🔗 full url: <span id="fullUrlPreview">https://www.geeksforgeeks.org/computer-networks/basics-computer-networking/</span>
+            </div>
 
-            function isCNUrl(url) {
-                if (!url.includes('geeksforgeeks.org')) return false;
-                const lower = url.toLowerCase();
-                return CN_KEYWORDS.some(kw => lower.includes(kw));
-            }
+            <!-- Action buttons -->
+            <div class="btn-row">
+                <button id="scrapeBtn"   class="btn btn-primary"  ><span>⛏️</span> scrape</button>
+                <button id="downloadBtn" class="btn btn-success"   disabled><span>📎</span> pdf</button>
+                <button id="clearBtn"    class="btn btn-secondary" ><span>🗑️</span> clear</button>
+            </div>
 
-            function showProgress()  { progressContainer.show(); }
-            function hideProgress()  { progressContainer.hide(); }
-            function updateProgress(percent, message, stage) {
-                progressBar.css('width', percent + '%').text(percent + '%');
-                statusText.text(message);
-                stageBadge.text(stage || '⏳');
-            }
-            function setControlsDisabled(disabled) {
-                scrapeBtn.prop('disabled', disabled);
-                downloadBtn.prop('disabled', disabled || !currentTitle);
-                urlInput.prop('disabled', disabled);
-                clearBtn.prop('disabled', false);
-            }
-            function showMessage(type, text) {
-                const msgDiv = $('<div>').addClass(type === 'error' ? 'warning-message' : 'success-message').text(text);
-                messageContainer.empty().append(msgDiv);
-                setTimeout(() => msgDiv.fadeOut(), 5000);
-            }
-            function updateProxyLog(message, isError = false) {
-                proxyLog.html(`⌨️ proxy: ${message}`);
-                if (isError) proxyLog.addClass('error'); else proxyLog.removeClass('error');
-            }
+            <!-- Proxy status log -->
+            <div id="proxyLog" class="proxy-log">⌨️ proxy: ready · topic: computer networks</div>
 
-            async function fetchWithFallback(targetUrl, onProgress) {
-                const errors = [];
-                for (const proxy of PROXIES) {
-                    onProgress(`trying ${proxy.name}...`);
-                    updateProxyLog(`trying ${proxy.name} ...`);
-                    try {
-                        const proxyUrl = proxy.buildUrl(targetUrl);
-                        const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(15000) });
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                        const html = await proxy.extract(res);
-                        if (!html || html.length < 200) throw new Error('too short');
-                        updateProxyLog(`✓ ${proxy.name} ok · 📡 computer networks`);
-                        return html;
-                    } catch (err) {
-                        updateProxyLog(`✗ ${proxy.name}: ${err.message}`);
-                        errors.push(`${proxy.name}: ${err.message}`);
-                    }
-                }
-                throw new Error(`all proxies failed.\n${errors.join('\n')}`);
-            }
+            <!-- Hint shown on bad slug -->
+            <div id="hintBox" class="hint-box">
+                <strong>⚠️ That doesn't look like a Computer Networks article slug.</strong>
+                Try a slug like:
+                <span class="hint-link" id="hintLink">computer-networks/basics-computer-networking/</span>
+            </div>
 
-            function extractArticleHeader($html) {
-                let title = 'Untitled';
-                let lastUpdated = 'Not Available';
-                const titleSelectors = ['.ArticleHeader_article-title__futDC h1','.article-title h1','.entry-title','.post-title','h1.article-title','h1.post-title','article h1','main h1','.content h1','h1:first'];
-                for (let sel of titleSelectors) {
-                    let $t = $html.find(sel).first();
-                    if ($t.length && $t.text().trim()) { title = $t.text().trim(); break; }
-                }
-                const dateSelectors = ['.ArticleHeader_last_updated_parent__ohhpb','.last-updated','.post-date','.entry-date','.published','time','[itemprop="dateModified"]','[itemprop="datePublished"]','.date'];
-                for (let sel of dateSelectors) {
-                    let $d = $html.find(sel).first();
-                    if ($d.length) {
-                        let txt = $d.text().trim().replace(/last\s+updated:?\s*/i,'').replace(/published:?\s*/i,'');
-                        if (txt.length > 5) { lastUpdated = txt; break; }
-                    }
-                }
-                return { title, lastUpdated };
-            }
+        </div>
 
-            function extractMainContent(html) {
-                const $html = $('<div>').html(html);
-                const headerInfo = extractArticleHeader($html);
-                currentTitle       = headerInfo.title;
-                currentLastUpdated = headerInfo.lastUpdated;
+        <!-- ── Progress bar ── -->
+        <div id="progressContainer" class="progress-container">
+            <div id="progressBar" class="progress-bar">0%</div>
+            <div class="progress-status">
+                <span id="statusText">starting...</span>
+                <span id="stageBadge" class="stage-badge">⬜</span>
+            </div>
+        </div>
 
-                $html.find('script, style, iframe, noscript, .ads, .advertisement, .sidebar, footer, header, nav, .comments, .recommended, .related-articles, .suggested-reading, .trending-articles, .popular-posts, .google-ads, .ad-container').remove();
+        <!-- ── Flash messages ── -->
+        <div id="messageContainer" class="message-container"></div>
 
-                let $content = $html.find('.article-content, .entry-content, .text, .content, main, #main, .post-content, article, .main-content, .article-page-content');
-                if ($content.length === 0) $content = $html.find('body');
+        <!-- ── Stats panel ── -->
+        <div id="statsSection" class="stats-section">
+            <div class="stats-label-row">📡 computer networks · article stats</div>
+            <div class="stats-items">
+                <div class="stat-item">
+                    <div class="stat-value" id="wordCount">–</div>
+                    <div class="stat-label">words</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="headingCount">–</div>
+                    <div class="stat-label">headings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="codeBlocks">–</div>
+                    <div class="stat-label">code blocks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="titleLength">–</div>
+                    <div class="stat-label">title chars</div>
+                </div>
+                <div class="stat-item" style="min-width:160px;">
+                    <div class="stat-value" style="font-size:1rem; padding-top:6px;" id="lastUpdated">–</div>
+                    <div class="stat-label">last updated</div>
+                </div>
+            </div>
+        </div>
 
-                $content.find('*').each(function() {
-                    const $this = $(this);
-                    if ($this.text().trim() === '' && !$this.is('br, img, hr')) { $this.remove(); return; }
-                    if ($this.is('h1, h2, h3, h4, h5, h6') && shouldRemoveTitle($this.text())) { $this.remove(); return; }
-                    const keep = ['href','src','alt','title'];
-                    for (let attr of this.attributes) {
-                        if (!keep.includes(attr.name) && !attr.name.startsWith('data-')) $(this).removeAttr(attr.name);
-                    }
-                });
-                return $content;
-            }
+        <!-- ── Hidden PDF render target ── -->
+        <div id="pdfContainer"></div>
 
-            function formatContent($content, includeCopyButtons = true) {
-                const $container = $('<div>').addClass(includeCopyButtons ? 'scraped-content' : 'pdf-content');
+        <!-- ── Content preview ── -->
+        <div class="content-preview">
+            <h3>📄 preview · computer networks</h3>
+            <div id="scrapedContent" class="scraped-content">
+                <div class="placeholder-msg">
+                    <div class="big">📡</div>
+                    <p>Click a topic button above or type a slug and click <strong>scrape</strong><br>
+                    Base URL is locked to <strong>https://www.geeksforgeeks.org/</strong></p>
+                </div>
+            </div>
+        </div>
 
-                const $header = $('<div>').addClass('article-header');
-                $header.append(`<h1>${currentTitle}</h1>`);
-                const metaItems = [];
-                if (currentLastUpdated !== 'Not Available') metaItems.push(`📅 last updated: ${currentLastUpdated}`);
-                metaItems.push(`📡 subject: computer networks`);
-                $header.append(`<div class="article-meta"><span>${metaItems.join(' &nbsp;·&nbsp; ')}</span></div>`);
-                $container.append($header);
+    </div><!-- /.main-content -->
+</div><!-- /.container -->
 
-                const $processed = $content.clone();
-                $processed.find('h1, h2, h3, h4, h5, h6, p, div, span, a, li, blockquote, pre, code, table, th, td').css('color','#1f1f1f');
-                $processed.find('pre').each(function() {
-                    $(this).css({ background:'#e1d7cf', border:'1px solid #b2a18f', borderRadius:'20px', padding:'18px', margin:'15px 0', position:'relative' });
-                    if (includeCopyButtons) {
-                        const $btn = $('<button>').addClass('copy-btn').html('📋 copy');
-                        $(this).append($btn);
-                        $btn.on('click', function(e){
-                            e.stopPropagation();
-                            const code = $(this).parent().find('code').text() || $(this).parent().text();
-                            navigator.clipboard.writeText(code).then(()=>{ $btn.text('✔️ copied'); setTimeout(()=>$btn.html('📋 copy'),2000); });
-                        });
-                    }
-                });
-                $processed.find('code').not('pre code').css({ background:'#ded3c9', padding:'3px 7px', borderRadius:'14px' });
-                $processed.find('table').css({ borderCollapse:'collapse', width:'100%', margin:'15px 0' });
-                $processed.find('th, td').css({ border:'1px solid #b7a695', padding:'9px' });
-                $processed.find('th').css({ background:'#d2c5b8' });
-                $processed.find('ul, ol').css({ margin:'10px 0 10px 30px' });
-                $processed.find('blockquote').css({ borderLeft:'6px solid #9b897a', paddingLeft:'18px', margin:'15px 0', background:'#ede5dd', borderRadius:'0 20px 20px 0' });
-                $processed.find('img').css({ maxWidth:'100%', borderRadius:'16px', border:'1px solid #bfb0a1' });
-                $processed.find('a').css({ color:'#6d4f39', textDecoration:'underline' });
+<!-- App script -->
+<script src="script.js"></script>
 
-                $container.append($processed.contents());
-                return $container;
-            }
-
-            function updateStats($content) {
-                const text    = $content.text();
-                const words   = text.split(/\s+/).filter(w => w.length).length;
-                const headings = $content.find('h1, h2, h3, h4, h5, h6').length;
-                const codeCnt  = $content.find('pre').length;
-                titleLength.text(currentTitle.length);
-                wordCount.text(words.toLocaleString());
-                headingCount.text(headings);
-                codeBlocks.text(codeCnt);
-                lastUpdated.text(currentLastUpdated);
-                statsSection.css('display','flex');
-            }
-
-            async function scrapeArticle() {
-                const url = urlInput.val().trim();
-                if (!url) { showMessage('error','enter a URL'); return; }
-                if (!url.includes('geeksforgeeks.org')) {
-                    showMessage('error','⚠️ only GeeksforGeeks URLs are supported');
-                    return;
-                }
-                if (!isCNUrl(url)) {
-                    showMessage('error','⚠️ please use a Computer Networks topic URL');
-                    return;
-                }
-
-                setControlsDisabled(true);
-                showProgress();
-                updateProgress(10, 'starting ...', '⬜');
-
-                try {
-                    updateProgress(20, 'fetching via proxies', '📡');
-                    const html = await fetchWithFallback(url, (msg) => updateProgress(30, msg, '🔄'));
-
-                    updateProgress(50, 'extracting content', '✂️');
-                    const $content = extractMainContent(html);
-                    if (!$content.length || $content.text().trim().length === 0) throw new Error('no content extracted');
-
-                    updateProgress(70, 'formatting', '🖌️');
-                    const $previewContent = formatContent($content, true);
-                    const $pdfContent     = formatContent($content, false);
-
-                    updateProgress(90, 'rendering preview', '👁️');
-                    scrapedContent.empty().append($previewContent);
-                    pdfContainer.empty().append($pdfContent);
-
-                    updateStats($previewContent);
-                    updateProgress(100, 'complete', '✅');
-                    showMessage('success','✅ computer networks article scraped');
-                    downloadBtn.prop('disabled', false);
-                    setTimeout(hideProgress, 1000);
-                } catch (err) {
-                    console.error(err);
-                    showMessage('error','scrape failed: ' + err.message);
-                    updateProxyLog('❌ all proxies failed', true);
-                    setControlsDisabled(false);
-                    hideProgress();
-                }
-            }
-
-            async function generatePDF() {
-                const pdfEl = pdfContainer.children().first();
-                if (!pdfEl || !pdfEl.length) { showMessage('error','no content to export'); return; }
-                setControlsDisabled(true);
-                showProgress();
-                updateProgress(10, 'preparing pdf', '📄');
-
-                try {
-                    const title    = currentTitle.replace(/[^a-z0-9]+/gi,'-').toLowerCase().substring(0,50) || 'computer_networks_article';
-                    const filename = 'CN_' + title + '.pdf';
-                    updateProgress(40, 'generating...', '🖨️');
-                    const opt = {
-                        margin: [0.5,0.5,0.5,0.5],
-                        filename: filename,
-                        image: { type:'jpeg', quality:0.98 },
-                        html2canvas: { scale:2, backgroundColor:'#ffffff', logging:false },
-                        jsPDF: { unit:'in', format:'a4', orientation:'portrait' }
-                    };
-                    updateProgress(70, 'rendering', '⏳');
-                    await html2pdf().set(opt).from(pdfEl[0]).save();
-                    updateProgress(100, 'done!', '💾');
-                    showMessage('success','PDF saved as ' + filename);
-                } catch (err) {
-                    console.error(err);
-                    showMessage('error','pdf export failed');
-                } finally {
-                    setControlsDisabled(false);
-                    setTimeout(hideProgress, 1000);
-                }
-            }
-
-            function clearContent() {
-                currentTitle = ''; currentLastUpdated = '';
-                scrapedContent.html('<p style="color: #5b4f45; text-align: center;">select a topic above or enter a GeeksforGeeks Computer Networks URL and click scrape</p>');
-                pdfContainer.empty();
-                statsSection.hide();
-                downloadBtn.prop('disabled', true);
-                urlInput.val('');
-                updateProxyLog('ready · topic: computer networks');
-                showMessage('success','cleared');
-                scrapeBtn.prop('disabled', false);
-                urlInput.prop('disabled', false);
-                clearBtn.prop('disabled', false);
-            }
-
-            // Quick-pick pills
-            $('.pill').on('click', function() {
-                const url = $(this).data('url');
-                urlInput.val(url);
-                scrapeArticle();
-            });
-
-            scrapeBtn.on('click', scrapeArticle);
-            downloadBtn.on('click', generatePDF);
-            clearBtn.on('click', clearContent);
-            urlInput.on('keypress', function(e){ if(e.which===13) scrapeArticle(); });
-
-            downloadBtn.prop('disabled', true);
-        });
-    </script>
 </body>
 </html>
